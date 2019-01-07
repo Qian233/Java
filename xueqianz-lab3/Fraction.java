@@ -1,53 +1,49 @@
-//Xueqian Zhang id: xueqianz
 package lab3;
 
 public class Fraction {
-	int numerator;
+	int numberator;
 	int denominator;
 	
-	Fraction(){
-		numerator = 1;
+	public Fraction() {
+		numberator =1;
 		denominator = 1;
 	}
 	
-	Fraction(int numerator, int denominator){
-		this.numerator = numerator;
+	public Fraction(int numberator, int denominator) {
+		this.numberator = numberator;
 		this.denominator = denominator;
 	}
-	
-	public String toString(){
-		String s = numerator + "/" + denominator;
-		return s;
-		
+
+	@Override
+	public String toString() {
+		return  numberator + "/" + denominator ;
 	}
 	
 	public double toDecimal() {
-		double d = numerator/(double)denominator;
-		return d;
-		
+		return  numberator/(double)denominator ;
 	}
 	
-	public Fraction add(Fraction f) {
-		Fraction ff = new Fraction();
-		int tempNumerator = this.numerator * f.denominator + this.denominator * f.numerator;
-		int tempDenominator = this.denominator * f.denominator;
+	Fraction add(Fraction f){
+		int newDenominator = this.denominator*f.denominator;
+		int newNumerator = this.numberator*f.denominator+this.denominator*f.numberator;
 		
-		int divisor = findGCD(tempNumerator, tempDenominator);
-		ff.numerator = tempNumerator/divisor;
-		ff.denominator = tempDenominator/divisor;
-		return ff;
+		int finalNumerator = newNumerator/this.findGCD(newNumerator, newDenominator);
+		int finalDenominator = newDenominator/this.findGCD(newNumerator, newDenominator);
 		
+		return new Fraction(finalNumerator,finalDenominator);
 	}
 	
-	public int findGCD(int numerator, int denominator) {
-		if(numerator == 0) {
+	int findGCD(int numberator,int denominator) {
+		if (numberator == 0) {
 			return 1;
 		}
-		if(denominator == 0) {
-			return numerator;
+		else if(denominator == 0) {
+			return numberator;
+		}else {
+			return this.findGCD(denominator,numberator%denominator );
 		}
 		
-		return findGCD(denominator,numerator%denominator);
 	}
+	
 
 }

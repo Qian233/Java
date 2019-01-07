@@ -1,35 +1,31 @@
-//Xueqian Zhang id: xueqianz
 package lab3;
 
 public class MixedFraction extends Fraction {
 	int naturalNumber;
-	
-	MixedFraction(int naturalNumber, int numerator, int denominator){
+
+	public MixedFraction(int naturalNumber,int numberator, int denominator) {
 		this.naturalNumber = naturalNumber;
-		this.numerator = numerator;
+		this.numberator = numberator;
 		this.denominator = denominator;
 	}
 	
-	public String toString(){
-		String s = naturalNumber + " " + numerator + "/" + denominator;
-		return s;
+	@Override
+	public String toString() {
+		return naturalNumber +" "+ numberator + "/" + denominator ;
 	}
 	
+	
+	@Override
 	public double toDecimal() {
-		double d = (naturalNumber * denominator + numerator)/(double)denominator;
-		return d;
+		return ((naturalNumber*denominator)+numberator)/(double)denominator ;
 	}
 	
 	public Fraction toFraction() {
-		Fraction Fra = new Fraction(naturalNumber*denominator + numerator,denominator);
-		return Fra;
+		return(new Fraction(((naturalNumber*denominator)+numberator),denominator));
 	}
 	
-	public Fraction add(MixedFraction mf) {
-		Fraction fa = this.toFraction().add(mf.toFraction());
-
-		return fa;
-		
+	Fraction add(MixedFraction mf){
+		return this.toFraction().add(mf.toFraction());
 	}
 
 }
