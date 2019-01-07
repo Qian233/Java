@@ -1,4 +1,3 @@
-//Xueqian Zhang id: xueqianz
 package lab7;
 
 public class Word {
@@ -8,6 +7,6 @@ public class Word {
 		this.word = word;
 		this.meaning = meaning;
 	}
-
+	
 
 }

@@ -1,11 +1,9 @@
-//Xueqian Zhang id: xueqianz
 package lab7;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -89,9 +87,8 @@ public class Dictionary {
 	 */
 	void loadSingleMap() {
 		//write your code here
- 
-		for(Word w: wordList){
-			singleMap.put(w.word.toLowerCase(), w);
+		for(Word w: wordList) {
+			singleMap.put(w.word.toLowerCase(), new Word(w.word,w.meaning));
 		}
 	}
 
@@ -102,36 +99,16 @@ public class Dictionary {
 	 */
 	void loadMultiMap() {
 		//write your code here
-		for(Word w:wordList) {
-			List<Word> list = new ArrayList<>();
-			if(!multiMap.containsKey(w.word.toLowerCase())) {
-				list.add(w);
-				multiMap.put(w.word.toLowerCase(), list);
+		for(Word w: wordList) {
+			if(multiMap.get(w.word.toLowerCase())==null) {
+				List<Word> meanigList = new ArrayList<>();
+				meanigList.add(w);
+				multiMap.put(w.word.toLowerCase(), meanigList);
+				
 			}else {
 				multiMap.get(w.word.toLowerCase()).add(w);
 			}
 		}
-//		Iterator<Word> iter = wordList.iterator();
-//		ArrayList<String> uniqueWord = new ArrayList<>();
-//		//generate a unique list 
-//		while(iter.hasNext()) {
-//			if(!uniqueWord.contains(iter.next().word)) {
-//				uniqueWord.add(iter.next().word);
-//			}
-//		}
-//		
-//		
-//			for(int i = 0; i < uniqueWord.size();i++) {
-//				List<Word> meaningList = null;
-//				for(Word w: wordList){
-//					if(uniqueWord.get(i).equals(w.word)) {
-//						meaningList.add(w);
-//					}
-//				}
-//				multiMap.put(uniqueWord.get(i).toLowerCase(),meaningList);
-//			}
-
-
 	}
 	
 	/** searchWordList() takes a searchWord String and and searches for it in wordList.
@@ -140,18 +117,17 @@ public class Dictionary {
 	 */
 	void searchWordList(String searchWord) {
 		//write your code here
-		boolean b = false;
-		for(Word w:wordList) {
+		boolean notFind = true;
+		for(Word w: wordList) {
 			if(w.word.toLowerCase().equals(searchWord.toLowerCase())) {
-				System.out.println(w.word+" "+w.meaning);
-				b = true;
+				System.out.println(w.meaning);
+				notFind = false;
 			}
-			
 		}
-		if(b==false) {
-			System.out.println("Sorry! "+searchWord+" not found!");
+		if(notFind) {
+			System.out.println("Sorry, not found.");
 		}
-		}
+	}
 	
 	/** searchSingleMap() takes a searchWord String and searches for it in singleMap.
 	 * If found, it prints its meaning. Else it prints 'Sorry! <word> not found!'. 
@@ -160,16 +136,11 @@ public class Dictionary {
 	 */
 	void searchSingleMap(String searchWord) {
 		//write your code here
-		if(singleMap.containsKey(searchWord.toLowerCase())) {
-			System.out.println(singleMap.get(searchWord.toLowerCase()).word+" "+singleMap.get(searchWord.toLowerCase()).meaning);
+		if(singleMap.get(searchWord.toLowerCase())==null) {
+			System.out.println("Sorry, not found.");
 		}else {
-			System.out.println("Sorry! "+searchWord+" not found!");
+			System.out.println(singleMap.get(searchWord.toLowerCase()).meaning);
 		}
-//		for(Map.Entry<String,Word> e: singleMap.entrySet()) {
-//			if(searchWord.toLowerCase().equals(e.getKey())) {
-//				System.out.println(e.getValue().word+" "+e.getValue().meaning);
-//			}
-//		}
 	}
 
 	/** searchMultiMap() takes a searchWord String and searches for it in multiMap. 
@@ -179,14 +150,13 @@ public class Dictionary {
 	 */
 	void searchMultiMap(String searchWord) {
 		//write your code here
-		
-		if(multiMap.containsKey(searchWord.toLowerCase())) {
-			for(int i= 0; i < multiMap.get(searchWord.toLowerCase()).size();i++) {
-				System.out.println(multiMap.get(searchWord.toLowerCase()).get(i).word+" "+multiMap.get(searchWord.toLowerCase()).get(i).meaning);
-			}
+		if(multiMap.get(searchWord.toLowerCase())==null) {
+			System.out.println("Sorry, not found.");
 		}else {
-			System.out.println("Sorry! "+searchWord+" not found!");
+			for(Word w: multiMap.get(searchWord.toLowerCase())) {
+				System.out.println(w.meaning);
+			}
+			
 		}
-		
 	}
 }
